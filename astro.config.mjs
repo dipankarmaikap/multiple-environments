@@ -6,8 +6,9 @@ import vercel from "@astrojs/vercel/serverless";
 import { loadEnv } from "vite";
 
 const allEnv = loadEnv(process.env.NODE_ENV, process.cwd(), "");
-const { STORYBLOK_ACESS_TOKEN, IS_PREVIEW } = allEnv;
+const { STORYBLOK_ACESS_TOKEN, IS_PREVIEW, IS_LOCAL } = allEnv;
 const isPreview = IS_PREVIEW === "yes";
+const isLocal = IS_LOCAL === "yes";
 // https://astro.build/config
 export default defineConfig({
   integrations: [
@@ -27,14 +28,14 @@ export default defineConfig({
   ],
   output: "server",
   vite: {
-    // plugins: [mkcert()],
+    plugins: isLocal ? [mkcert()] : [],
   },
   adapter: vercel(
     isPreview
       ? {}
       : {
           isr: {
-            expiration: 60 * 60 * 24,
+            expiration: 60,
           },
         }
   ),
