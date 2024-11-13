@@ -1,0 +1,19 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import { useStoryblok } from "@storyblok/astro";
+import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
+const { slug } = Astro.params;
+
+const story = await useStoryblok(
+  `cdn/stories/${slug || "home"}`,
+  {
+    version: "draft",
+  },
+  {},
+  Astro
+);
+---
+
+<BaseLayout>
+  {story && <StoryblokComponent blok={story.content} />}
+</BaseLayout>
