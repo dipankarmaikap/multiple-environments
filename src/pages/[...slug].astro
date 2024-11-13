@@ -7,7 +7,8 @@ const { slug } = Astro.params;
 const story = await useStoryblok(
   `cdn/stories/${slug || "home"}`,
   {
-    version: "draft",
+    version: import.meta.env.IS_PREVIEW === "yes" ? "draft" : "published",
+    cv: new Date().getMilliseconds(),
   },
   {},
   Astro

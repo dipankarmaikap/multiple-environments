@@ -6,21 +6,21 @@ import vercel from "@astrojs/vercel/serverless";
 import { loadEnv } from "vite";
 
 const allEnv = loadEnv(process.env.NODE_ENV, process.cwd(), "");
-const { STORYBLOK_ACESS_TOKEN } = allEnv;
-
+const { STORYBLOK_ACESS_TOKEN, IS_PREVIEW } = allEnv;
+const isPreview = IS_PREVIEW === "yes";
 // https://astro.build/config
 export default defineConfig({
   integrations: [
     storyblok({
       accessToken: STORYBLOK_ACESS_TOKEN,
-      bridge: true,
-      enableFallbackComponent: true,
-      livePreview: true,
+      bridge: isPreview,
+      enableFallbackComponent: isPreview,
+      livePreview: isPreview,
       components: {
-        // page: "storyblok/Page",
+        page: "storyblok/Page",
         // feature: "storyblok/Feature",
         // grid: "storyblok/Grid",
-        // teaser: "storyblok/Teaser",
+        teaser: "storyblok/Teaser",
       },
     }),
     tailwind(),
@@ -29,5 +29,13 @@ export default defineConfig({
   vite: {
     plugins: [mkcert()],
   },
-  adapter: vercel(),
+  adapter: vercel(
+    isPreview
+      ? {}
+      : {
+          isr: {
+            expiration: 60 * 60 * 24,
+          },
+        }
+  ),
 });
