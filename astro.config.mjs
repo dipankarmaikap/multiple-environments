@@ -27,7 +27,7 @@ export default defineConfig({
   ],
   output: "server",
   vite: {
-    plugins: [mkcert()],
+    // plugins: [mkcert()],
   },
   adapter: vercel(
     isPreview
