@@ -1,0 +1,16 @@
+---
+import { storyblokEditable } from '@storyblok/astro';
+import { isPreview } from '~/util';
+const { blok } = Astro.props;
+if (!isPreview) {
+  return null;
+}
+---
+
+<div class="w-full bg-neutral-200 rounded max-w-sm mx-auto text-center p-4">
+  <p>
+    Component could not be found for blok <span class="text-[#50b0ae]"
+      >{blok.component}</span
+    >! Is it configured correctly?
+  </p>
+</div>
