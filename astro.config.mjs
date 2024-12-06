@@ -28,6 +28,14 @@ const storyblokConfig = {
   },
 };
 
+// Vercel adapter configuration
+const vercelConfig = isPreview
+  ? {}
+  : {
+      isr: {
+        expiration: 60, // Cache expiration in seconds
+      },
+    };
 // https://astro.build/config
 export default defineConfig({
   integrations: [storyblok(storyblokConfig), tailwind()],
@@ -35,7 +43,5 @@ export default defineConfig({
   vite: {
     plugins: isLocal ? [mkcert()] : [],
   },
-  adapter: vercel({
-    isr: isPreview ? false : { expiration: 60 },
-  }),
+  adapter: vercel(vercelConfig),
 });
