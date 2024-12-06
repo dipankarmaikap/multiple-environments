@@ -8,10 +8,8 @@ import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro';
 if (!isPreview) {
   Astro.response.headers.set(
     'Cache-Control',
-    's-maxage=60, stale-while-revalidate'
+    's-maxage=60, stale-while-revalidate=60'
   );
-  Astro.response.headers.set('Vercel-CDN-Cache-Control', 'max-age=60');
-  Astro.response.headers.set('CDN-Cache-Control', 'max-age=60');
 }
 const { slug } = Astro.params;
 const story = await useStoryblok(
