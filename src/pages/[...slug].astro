@@ -1,13 +1,14 @@
 ---
-import BaseLayout from "~/layouts/BaseLayout.astro";
-import { useStoryblok } from "@storyblok/astro";
-import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { useStoryblok } from '@storyblok/astro';
+import { isPreview } from '~/util';
+import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro';
 const { slug } = Astro.params;
 
 const story = await useStoryblok(
-  `cdn/stories/${slug || "home"}`,
+  `cdn/stories/${slug || 'home'}`,
   {
-    version: import.meta.env.IS_PREVIEW === "yes" ? "draft" : "published",
+    version: isPreview ? 'draft' : 'published',
     cv: new Date().getMilliseconds(),
   },
   {},
