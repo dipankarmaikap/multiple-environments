@@ -35,13 +35,5 @@ export default defineConfig({
   vite: {
     plugins: isLocal ? [mkcert()] : [],
   },
-  adapter: vercel(
-    isPreview
-      ? {}
-      : {
-          isr: {
-            expiration: 60, // Cache expiration in seconds
-          },
-        }
-  ),
+  adapter: vercel(),
 });
