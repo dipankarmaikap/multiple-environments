@@ -15,10 +15,19 @@ interface ComponentsItem {
 export async function migrateComponents(fromSpace: number, toSpace: number) {
   const fromGroupsUrl = `https://mapi.storyblok.com/v1/spaces/${fromSpace}/component_groups/`;
   const toGroupsUrl = `https://mapi.storyblok.com/v1/spaces/${toSpace}/component_groups/`;
+  const fromComponentsUrl = `https://mapi.storyblok.com/v1/spaces/${fromSpace}/components/`;
+  const toComponentsUrl = `https://mapi.storyblok.com/v1/spaces/${toSpace}/components/`;
 
-  const [fromGroupsResponse, toGroupsResponse] = await Promise.all([
+  const [
+    fromGroupsResponse,
+    toGroupsResponse,
+    fromComponentResponse,
+    toComponentResponse,
+  ] = await Promise.all([
     getFromStorylok(fromGroupsUrl),
     getFromStorylok(toGroupsUrl),
+    getFromStorylok(fromComponentsUrl),
+    getFromStorylok(toComponentsUrl),
   ]);
   const fromGroups: ComponentGroup[] =
     fromGroupsResponse.component_groups || [];
@@ -98,12 +107,6 @@ export async function migrateComponents(fromSpace: number, toSpace: number) {
     );
   }
   console.log('Component group migration completed.');
-  const fromComponentsUrl = `https://mapi.storyblok.com/v1/spaces/${fromSpace}/components/`;
-  const toComponentsUrl = `https://mapi.storyblok.com/v1/spaces/${toSpace}/components/`;
-  const [fromComponentResponse, toComponentResponse] = await Promise.all([
-    getFromStorylok(fromComponentsUrl),
-    getFromStorylok(toComponentsUrl),
-  ]);
   const toComponets = new Map<string, ComponentsItem>(
     toComponentResponse?.components?.map((component: ComponentsItem) => [
       component.name,
@@ -146,5 +149,4 @@ export async function migrateComponents(fromSpace: number, toSpace: number) {
       console.log('Creating new component.' + component?.name);
     }
   }
-  //   console.log(fromComponentResponse);
 }

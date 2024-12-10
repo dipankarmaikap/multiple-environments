@@ -32,9 +32,7 @@ const addToStorylok = async (url: string, body: any, method?: string) => {
     });
 
     if (!addResponse.ok) {
-      console.error(
-        `Failed to add entry to datasource: ${addResponse.statusText}`
-      );
+      console.error(`Failed to add entry: ${addResponse.statusText}`);
     }
     // Check for empty body or non-JSON responses
     const contentType = addResponse.headers.get('Content-Type') || '';

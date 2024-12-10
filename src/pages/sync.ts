@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import { migrateAssets } from '~/lib/assets';
 import { migrateComponents } from '~/lib/components';
 import { migrateDatasources } from '~/lib/datasource';
 import { createResponse, getFromStorylok } from '~/lib/helper';
@@ -22,7 +23,8 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     // await migrateDatasources(fromSpace, toSpace);
-    await migrateComponents(fromSpace, toSpace);
+    // await migrateComponents(fromSpace, toSpace);
+    await migrateAssets(fromSpace, toSpace);
 
     // Perform operations with `fromSpace` and `toSpace`
     //Application Code goes here
