@@ -23,9 +23,9 @@ export const POST: APIRoute = async ({ request }) => {
       return createResponse('The request lacks valid inputs.', 400);
     }
 
-    // await migrateDatasources(fromSpace, toSpace);
-    // await migrateComponents(fromSpace, toSpace);
-    // await migrateAssets(fromSpace, toSpace);
+    await migrateDatasources(fromSpace, toSpace);
+    await migrateComponents(fromSpace, toSpace);
+    await migrateAssets(fromSpace, toSpace);
     await migrateStories(fromSpace, toSpace);
 
     // Perform operations with `fromSpace` and `toSpace`

@@ -1,4 +1,3 @@
-import { uploadFileToStoryblok } from './assetUpload';
 import { addToStorylok, getFromStorylok } from './helper';
 
 interface Story {
