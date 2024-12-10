@@ -24,6 +24,7 @@ const storyblokConfig = {
     page: 'storyblok/Page',
     feature: 'storyblok/Feature',
     teaser: 'storyblok/Teaser',
+    Announcement: 'storyblok/Announcement',
     // grid: "storyblok/Grid",
   },
 };
