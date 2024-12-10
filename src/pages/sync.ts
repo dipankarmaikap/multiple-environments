@@ -3,6 +3,7 @@ import { migrateAssets } from '~/lib/assets';
 import { migrateComponents } from '~/lib/components';
 import { migrateDatasources } from '~/lib/datasource';
 import { createResponse, getFromStorylok } from '~/lib/helper';
+import { migrateStories } from '~/lib/story';
 
 export const POST: APIRoute = async ({ request }) => {
   try {
@@ -24,7 +25,8 @@ export const POST: APIRoute = async ({ request }) => {
 
     // await migrateDatasources(fromSpace, toSpace);
     // await migrateComponents(fromSpace, toSpace);
-    await migrateAssets(fromSpace, toSpace);
+    // await migrateAssets(fromSpace, toSpace);
+    await migrateStories(fromSpace, toSpace);
 
     // Perform operations with `fromSpace` and `toSpace`
     //Application Code goes here

@@ -1,5 +1,5 @@
 import { uploadFileToStoryblok } from './assetUpload';
-import { getFromStorylok } from './helper';
+import { addToStorylok, getFromStorylok } from './helper';
 
 interface Asset {
   filename: string;
@@ -29,11 +29,23 @@ export async function migrateAssets(fromSpace: number, toSpace: number) {
 
     if (toAssetsMap.has(toSpaceFileName)) {
       //Check folder id and if correct skip or update folder name
-      console.log('Skipping Asset');
+      console.log('Skipping Asset as it already exist');
     } else {
       //Upload to new space
       console.log('Uploading Asset' + toSpaceFileName);
       await uploadFileToStoryblok(asset.filename, toSpace, asset);
     }
+    toAssetsMap.delete(toSpaceFileName);
+  }
+  // Remove orphaned Assets
+  for (const [, orphanedAssets] of toAssetsMap) {
+    await addToStorylok(
+      `https://mapi.storyblok.com/v1/spaces/${toSpace}/assets/${orphanedAssets.id}`,
+      {},
+      'DELETE'
+    );
+    console.log(
+      `Removed orphaned assets "${orphanedAssets.filename}" from target space.`
+    );
   }
 }
